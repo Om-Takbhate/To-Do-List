@@ -11,6 +11,12 @@
     padding: 10px;
 }
 
+li:hover{
+    background-color: #f2f0f0;
+    border-radius: 5px;
+    
+}
+
 .to_do_app{
     width: 100%;
     max-width: 540px;
