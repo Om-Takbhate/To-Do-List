@@ -2,48 +2,50 @@ const inputBox = document.getElementById('input_box');
 const listContainer = document.getElementById('list_container');
 const button = document.getElementById('addTask');
 
-
-inputBox.addEventListener('keydown',(e)=>{
-    if(e.key ==="Enter"){
+// Trigger add task function on Enter key press
+inputBox.addEventListener('keydown', (e) => {
+    if (e.key === "Enter") {
         addTaskFunction();
     }
+});
 
-})
-
-
-function addTaskFunction(){
-    if(inputBox.value ===''){
+// Add new task to the list
+function addTaskFunction() {
+    if (inputBox.value === '') {
         alert("You must enter some task first!");
-        saveData();
-    }
-    else{
+    } else {
         let li = document.createElement('li');
         li.innerHTML = inputBox.value;
         listContainer.appendChild(li);
-        let span = document.getElementById('span');
-        span.innerHTML = "\u00d7";
-        li.appendChild(span);
-        saveData();
 
+        saveData();
     }
-    inputBox.value = ""
+    inputBox.value = "";  // Clear input box
     saveData();
 }
-button.addEventListener('click',addTaskFunction)
 
-listContainer.addEventListener('click',(e)=>{
-    if(e.target.tagName ==="LI"){
-        e.target.classList.toggle("selected");
-        saveData()
+// Add task via button click
+button.addEventListener('click', addTaskFunction);
+
+// Remove task from the list on clicking the task (LI)
+listContainer.addEventListener('click', (e) => {
+    if (e.target.tagName === "LI") {
+        e.target.remove();  // Remove the clicked list item
+        saveData();
     }
-    
-})
+});
 
-function saveData(){
-    localStorage.setItem("data",listContainer.innerHTML)
+// Save the task list in localStorage
+function saveData() {
+    localStorage.setItem("data", listContainer.innerHTML);
 }
 
-function showData(){
+// Retrieve tasks from localStorage and display them on page load
+function showData() {
     listContainer.innerHTML = localStorage.getItem("data");
+    
+    // No need for extra event listeners since removing is handled by parent `listContainer`
 }
-showData()
+
+// Load the task list from localStorage on page load
+showData();
